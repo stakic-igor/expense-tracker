@@ -3,10 +3,9 @@ import { computed, ref } from 'vue'
 
 import Header from './components/Header.vue'
 import Balance from './components/Balance.vue';
-import ExpenseList from './components/ExpenseList.vue';
+import TransactionHistory from './components/TransactionHistory.vue';
 import ExpenseForm from './components/ExpenseForm.vue';
 
-const balance = ref(0);
 const items = ref([
     {
         id: 1,
@@ -48,11 +47,14 @@ const balanceTotal = computed(() => {
         }, 0)
     )
 });
+
 </script>
 
 <template>
-  <Header />
-  <Balance :balanceTotal="balanceTotal" />
-  <ExpenseList :items="items"  @passDeletedItems="handleDeleteItems"/>
-  <ExpenseForm />
+    <main class="w-1/2 mx-auto">
+        <Header />
+        <Balance :balanceTotal="balanceTotal" @tommorrow="handleDays"/>
+        <TransactionHistory :items="items"  @passDeletedItems="handleDeleteItems"/>
+        <ExpenseForm />
+    </main>
 </template>
