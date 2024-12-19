@@ -6,7 +6,7 @@ import Balance from './components/Balance.vue';
 import ExpenseList from './components/ExpenseList.vue';
 import ExpenseForm from './components/ExpenseForm.vue';
 
-const balance = ref(36000);
+const balance = ref(0);
 const items = [
     {
         id: 1,
@@ -26,9 +26,16 @@ const items = [
     {
         id: 4,
         name: 'item 4',
-        amount: -340
+        amount: -320
+    },
+    {
+        id: 5,
+        name: 'item 5',
+        amount: 99.99
     }
-]
+];
+
+balance.value = items.reduce((acc, initVal) => acc + initVal.amount, 0);
 </script>
 
 <template>

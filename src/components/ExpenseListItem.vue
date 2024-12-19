@@ -13,5 +13,8 @@ const props = defineProps({
 
 </script>
 <template>
-    <div>{{ name }} : $ {{ amount }}</div>
+    <div 
+        class="border-l-2 px-1 text-gray-800"
+        :class="amount < 0 ? 'border-red-500' : 'border-green-500'">{{ name }} : $ {{ amount }}
+    </div>
 </template>
