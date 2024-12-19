@@ -1,22 +1,13 @@
 <script setup>
+import { defineProps } from 'vue';
 import ExpenseListItem from './ExpenseListItem.vue';
-const items = [
-    {
-        id: 1,
-        name: 'item 1',
-        amount: 100
-    },
-    {
-        id: 2,
-        name: 'item 2',
-        amount: 200
-    },
-    {
-        id: 3,
-        name: 'item 3',
-        amount: -200
+
+defineProps({
+    items: {
+        type: Array,
+        required: true
     }
-]
+})
 </script>
 <template>
     <div>expense list</div>
