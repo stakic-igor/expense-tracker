@@ -6,7 +6,7 @@ const props = defineProps({
         type: Number,
         required: true
     },
-    name: {
+    note: {
         type: String,
         required: true
     },
@@ -25,12 +25,15 @@ const deleteItem = () => {
 </script>
 <template>
     <div 
-        class="text-red-500 text-bold w-8 h-8 flex justify-center items-center hover:cursor-pointer hover:bg-red-500 hover:text-white" 
+        class="text-red-500 text-bold w-8 h-8 flex justify-center items-center bg-gray-100 hover:cursor-pointer hover:bg-red-500 hover:text-white" 
         @click="deleteItem">
         <i class="pi pi-trash text-sm"></i>
     </div>
     <div 
-        class="text-sm border-l-2 px-1 h-8 text-gray-800 py-2 bg-gray-100 grow"
-        :class="amount < 0 ? 'border-red-500' : 'border-green-500'">{{ name }}: <i class="pi pi-dollar text-xs"></i> {{ amount }}
+        class="text-sm border-l-2 px-1 h-8 text-gray-800 py-2 bg-gray-200 grow"
+        :class="amount < 0 ? 'border-red-500' : 'border-green-500'">{{ note }}: <i class="pi pi-dollar text-xs"></i> {{ amount }}
+    </div>
+    <div class="text-xs text-gray-800 py-2">
+        ID: {{ id }}
     </div>
 </template>

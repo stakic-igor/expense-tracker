@@ -1,5 +1,12 @@
 <script setup>
-import { ref, defineEmits } from 'vue';
+import { ref, defineEmits, defineProps } from 'vue';
+
+const props = defineProps({
+    buttonText: {
+        type: String,
+        required: true
+    }
+});
 
 const amount = ref('');
 const note = ref('');
@@ -11,13 +18,21 @@ const addTransaction = (transactionData) => {
 }
 
 function handleSubmit() {
-    console.log('submit');
-    console.log(note.value, amount.value);
     const transactionData = {
-        amount: amount.value,
+        id: Math.floor(Math.random() * 1000000), // Add random id
         note: note.value,
+        amount: parseFloat(amount.value),
     }
-    addTransaction(transactionData)
+
+    if(note.value == "" || amount.value == "") {
+        return;
+    }
+
+    addTransaction(transactionData);
+
+    // Reset form data after submit
+    note.value = "";
+    amount.value = "";
     
 }
 </script>
@@ -54,7 +69,7 @@ function handleSubmit() {
         <div>
             <button 
                 type="submit" 
-                class="p-2 bg-blue-500 text-white rounded-full w-full mt-4 mb-8">Submit</button>
+                class="p-2 bg-blue-500 text-white rounded-full w-full mt-4 mb-8 hover:bg-blue-600">{{ buttonText }}</button>
         </div>
     </form>
 </template>

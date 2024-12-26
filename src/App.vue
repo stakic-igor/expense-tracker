@@ -9,27 +9,27 @@ import ExpenseForm from './components/ExpenseForm.vue';
 const items = ref([
     {
         id: 1,
-        name: 'item 1',
+        note: 'item 1',
         amount: 500
     },
     {
         id: 2,
-        name: 'item 2',
+        note: 'item 2',
         amount: 200
     },
     {
         id: 3,
-        name: 'item 3',
+        note: 'item 3',
         amount: -200
     },
     {
         id: 4,
-        name: 'item 4',
+        note: 'item 4',
         amount: -320
     },
     {
         id: 5,
-        name: 'item 5',
+        note: 'item 5',
         amount: 99.99
     }
 ]);
@@ -42,6 +42,7 @@ const handleDeleteItems = (id) => {
 
 const handleAddTransaction = (transactionData) => {
     console.log(transactionData)
+    items.value.push(transactionData)
 }
 
 const balanceTotal = computed(() => {
@@ -59,6 +60,6 @@ const balanceTotal = computed(() => {
         <Header />
         <Balance :balanceTotal="balanceTotal" />
         <TransactionHistory :items="items"  @passDeletedItems="handleDeleteItems"/>
-        <ExpenseForm @addTransaction="handleAddTransaction" />
+        <ExpenseForm @addTransaction="handleAddTransaction" :button-text="'Add Transaction'"/>
     </main>
 </template>

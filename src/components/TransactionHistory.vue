@@ -23,7 +23,7 @@ const passDeletedItem = (id) => {
     </div>
     <div v-for="item in items" :key="item.id" class="flex flex-row items-center mb-2">
         <ExpenseListItem 
-            :name="item.name" 
+            :note="item.note" 
             :amount="item.amount" 
             :id="item.id" 
             @deletedItem="passDeletedItem"
