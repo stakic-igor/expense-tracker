@@ -40,6 +40,10 @@ const handleDeleteItems = (id) => {
     items.value = items.value.filter((item) => { return item.id !== id})
 }
 
+const handleAddTransaction = (transactionData) => {
+    console.log(transactionData)
+}
+
 const balanceTotal = computed(() => {
     return (
         items.value.reduce((acc, currItem) => {
@@ -53,8 +57,8 @@ const balanceTotal = computed(() => {
 <template>
     <main class="w-1/2 mx-auto">
         <Header />
-        <Balance :balanceTotal="balanceTotal" @tommorrow="handleDays"/>
+        <Balance :balanceTotal="balanceTotal" />
         <TransactionHistory :items="items"  @passDeletedItems="handleDeleteItems"/>
-        <ExpenseForm />
+        <ExpenseForm @addTransaction="handleAddTransaction" />
     </main>
 </template>

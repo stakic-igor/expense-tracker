@@ -1,11 +1,28 @@
 <script setup>
+import { ref, defineEmits } from 'vue';
+
+const amount = ref('');
+const note = ref('');
+
+const emit = defineEmits(['addTransaction']);
+
+const addTransaction = (transactionData) => {
+    emit('addTransaction', transactionData)
+}
 
 function handleSubmit() {
     console.log('submit');
+    console.log(note.value, amount.value);
+    const transactionData = {
+        amount: amount.value,
+        note: note.value,
+    }
+    addTransaction(transactionData)
+    
 }
 </script>
 
-<template>
+<template>  
     <h3 class="text-xl my-4 text-gray-800">Add income or expense</h3>
     <p class="text-xs text-gray-600 mb-6"><i class="pi pi-info-circle text-xs mr-1"></i>Enter the total amount of the expense. 
         Please ensure that you enter the correct amount to accurately track your expenses. For expenses, add '-' as prefix.<br />
@@ -15,21 +32,23 @@ function handleSubmit() {
         @submit.prevent="handleSubmit"
     >
         <div class="mb-4">
-            <label for="amount" class="block">Amount</label>
-            <input 
-                type="text" 
-                id="amount" 
-                class="px-4 py-2 rounded-sm border border-blue-500 w-full"
-                placeholder="Enter an amount, e.g. 500 for income or -500 for expense"    
+            <label for="note" class="block">Note</label>
+            <input
+                v-model="note"
+                type="text"
+                id="note"
+                class="px-4 py-2 rounded-sm border border-blue-500 w-full" 
+                placeholder="Enter a note..."
             />
         </div>
         <div>
-            <label for="note" class="block">Note</label>
+            <label for="amount" class="block">Amount</label>
             <input 
-                type="text" 
-                id="note" 
-                class="px-4 py-2 rounded-sm border border-blue-500 w-full" 
-                placeholder="Enter a note..."    
+                v-model="amount"
+                type="text"
+                id="amount"
+                class="px-4 py-2 rounded-sm border border-blue-500 w-full"
+                placeholder="Enter an amount, e.g. 500 for income or -500 for expense"    
             />
         </div>
         <div>

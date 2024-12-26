@@ -17,7 +17,7 @@ const passDeletedItem = (id) => {
 }
 </script>
 <template>
-    <div class="flex align-center justify-between my-4">
+    <div class="flex align-center justify-between my-4 p-2">
         <h3 class="text-xl text-gray-800">Transaction History</h3>
         <FilterTransactions />
     </div>
