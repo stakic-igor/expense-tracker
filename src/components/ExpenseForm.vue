@@ -14,16 +14,28 @@ function handleSubmit() {
     <form
         @submit.prevent="handleSubmit"
     >
-        <div>
+        <div class="mb-4">
             <label for="amount" class="block">Amount</label>
-            <input type="text" id="amount" class="border border-blue-500 w-full"/>
+            <input 
+                type="text" 
+                id="amount" 
+                class="px-4 py-2 rounded-sm border border-blue-500 w-full"
+                placeholder="Enter an amount, e.g. 500 for income or -500 for expense"    
+            />
         </div>
         <div>
-            <label for="note" class="block">Note:</label>
-            <input type="text" id="note" class="border border-blue-500 w-full" />
+            <label for="note" class="block">Note</label>
+            <input 
+                type="text" 
+                id="note" 
+                class="px-4 py-2 rounded-sm border border-blue-500 w-full" 
+                placeholder="Enter a note..."    
+            />
         </div>
         <div>
-            <button type="submit" class="p-2 bg-blue-500 text-white rounded-full w-full">Submit</button>
+            <button 
+                type="submit" 
+                class="p-2 bg-blue-500 text-white rounded-full w-full mt-4 mb-8">Submit</button>
         </div>
     </form>
 </template>
