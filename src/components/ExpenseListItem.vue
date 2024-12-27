@@ -33,7 +33,7 @@ const deleteItem = () => {
         class="text-sm border-l-2 px-1 h-8 text-gray-800 py-2 bg-gray-200 grow"
         :class="amount < 0 ? 'border-red-500' : 'border-green-500'">{{ note }}: <i class="pi pi-dollar text-xs"></i> {{ amount }}
     </div>
-    <div class="text-xs text-gray-800 py-2">
+    <div class="text-xs text-gray-800 p-2">
         ID: {{ id }}
     </div>
 </template>
