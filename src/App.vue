@@ -1,5 +1,7 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import TransactionView from './views/TransactionView.vue'
+</script>
 
 <template>
-  <h1>Expense Tracker</h1>
+  <TransactionView />
 </template>
