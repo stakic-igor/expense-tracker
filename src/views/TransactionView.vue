@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import type { Transactions } from '@/types/transactions.ts'
+import type { Transaction } from '@/types/transaction'
 import TransactionItem from '@/components/TransactionItem.vue'
+import TransactionForm from '@/components/TransactionForm.vue'
 
-const transactions = ref<Transactions[]>([
+const transactions = ref<Transaction[]>([
   {
     id: 1,
     description: 'first new job',
@@ -43,7 +44,7 @@ const totalIncome = computed(() => {
 const totalExpenses = computed(() => {
   return transactions.value
     .filter((item) => item.type === 'expense')
-    .reduce((sum, item) => sum - item.amount, 0)
+    .reduce((sum, item) => sum + item.amount, 0)
 })
 
 const balance = computed(() => {
@@ -55,8 +56,10 @@ const balance = computed(() => {
 
 <template>
   <h1>Transaction View</h1>
-  <section>
-    income: {{ totalIncome }}| Expense: {{ totalExpenses }} | Balance: {{ balance }}
+  <section class="font-light">
+    Income: {{ totalIncome }}| Expense: {{ totalExpenses }} |
+    <span class="font-bold">Balance: </span>{{ balance }}
   </section>
   <TransactionItem v-for="item in transactions" :key="item.id" :item="item" />
+  <TransactionForm />
 </template>

@@ -1,7 +1,7 @@
 export type TransactionType = 'expense' | 'income'
 export type Category = 'food' | 'transport' | 'entertainment' | 'utilities' | 'other'
 
-export interface Transactions {
+export interface Transaction {
   id: number
   description: string
   amount: number

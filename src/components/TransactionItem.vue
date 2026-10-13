@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { Transactions } from '@/types/transactions.ts'
+import type { Transaction } from '@/types/transaction'
 
 defineProps<{
-  item: Transactions
+  item: Transaction
 }>()
 </script>
 
