@@ -58,7 +58,7 @@ onMounted(() => {
   }
 })
 
-const currentPage = ref(2)
+const currentPage = ref(1)
 const itemsPerPage = ref(5)
 
 const startIndex = computed(() => (currentPage.value - 1) * itemsPerPage.value)
@@ -71,6 +71,14 @@ const paginatedTransactions = computed(() =>
 const totalPages = computed(() => {
   return Math.ceil(transactions.value.length / itemsPerPage.value)
 })
+
+const paginationPreviousPage = () => {
+  currentPage.value--
+}
+
+const paginationNextPage = () => {
+  currentPage.value++
+}
 </script>
 
 <template>
@@ -82,5 +90,9 @@ const totalPages = computed(() => {
   <TransactionItem v-for="item in paginatedTransactions" :key="item.id" :item="item" />
   <TransactionForm @add-transaction="addTransaction" />
 
-  {{ startIndex }} {{ totalPages }}
+  current page{{ currentPage }} total{{ totalPages }}
+  <section>
+    <button @click="paginationPreviousPage" :disabled="currentPage === 1">Previous</button>
+    <button @click="paginationNextPage" :disabled="currentPage === totalPages">Next</button>
+  </section>
 </template>
