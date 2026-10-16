@@ -1,39 +1,12 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, watch, onMounted } from 'vue'
+import { v4 as uuidv4 } from 'uuid'
 import type { Transaction } from '@/types/transaction'
+import type { TransactionType, Category } from '@/types/transaction.ts'
 import TransactionItem from '@/components/TransactionItem.vue'
 import TransactionForm from '@/components/TransactionForm.vue'
 
-const transactions = ref<Transaction[]>([
-  {
-    id: 1,
-    description: 'first new job',
-    amount: 500,
-    category: 'food',
-    type: 'income',
-  },
-  {
-    id: 2,
-    description: 'electricity',
-    amount: 350,
-    category: 'utilities',
-    type: 'expense',
-  },
-  {
-    id: 3,
-    description: 'sell my dog',
-    amount: 200,
-    category: 'food',
-    type: 'income',
-  },
-  {
-    id: 4,
-    description: 'my a cat',
-    amount: 200,
-    category: 'other',
-    type: 'expense',
-  },
-])
+const transactions = ref<Transaction[]>([])
 
 const totalIncome = computed(() => {
   return transactions.value
@@ -52,6 +25,38 @@ const balance = computed(() => {
     return item.type === 'income' ? sum + item.amount : sum - item.amount
   }, 0)
 })
+
+const addTransaction = (payload: {
+  description: string
+  amount: number
+  type: TransactionType
+  category: Category
+}) => {
+  transactions.value.push({
+    id: uuidv4(),
+    description: payload.description,
+    amount: payload.amount,
+    type: payload.type,
+    category: payload.category,
+  })
+}
+
+watch(
+  transactions,
+  (newTransaction) => {
+    localStorage.setItem('transactions', JSON.stringify(newTransaction))
+  },
+  {
+    deep: true,
+  },
+)
+
+onMounted(() => {
+  const storedTransactions = localStorage.getItem('transactions')
+  if (storedTransactions) {
+    transactions.value = JSON.parse(storedTransactions)
+  }
+})
 </script>
 
 <template>
@@ -61,5 +66,5 @@ const balance = computed(() => {
     <span class="font-bold">Balance: </span>{{ balance }}
   </section>
   <TransactionItem v-for="item in transactions" :key="item.id" :item="item" />
-  <TransactionForm />
+  <TransactionForm @add-transaction="addTransaction" />
 </template>

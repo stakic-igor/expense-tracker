@@ -4,10 +4,10 @@ import type { TransactionType, Category } from '@/types/transaction.ts'
 
 const description = ref('')
 const amount = ref(0)
-const TransactionType = ref<TransactionType>('income')
-const Category = ref<Category>('other')
+const transactionType = ref<TransactionType>('income')
+const category = ref<Category>('other')
 
-const selectTransactionType: TransactionType[] = ['income', 'expense']
+const selectTransactionTypes: TransactionType[] = ['income', 'expense']
 const selectCategoryOptions: Category[] = [
   'food',
   'transport',
@@ -15,23 +15,43 @@ const selectCategoryOptions: Category[] = [
   'utilities',
   'other',
 ]
+
+const emit = defineEmits<{
+  'add-transaction': [
+    payload: {
+      description: string
+      amount: number
+      type: TransactionType
+      category: Category
+    },
+  ]
+}>()
+
+const handleSubmit = () => {
+  emit('add-transaction', {
+    description: description.value,
+    amount: amount.value,
+    type: transactionType.value,
+    category: category.value,
+  })
+}
 </script>
 
 <template>
-  <form>
+  <form @submit.prevent="handleSubmit">
     <label for="description">Description:</label>
     <input type="text" id="description" name="description" v-model="description" />
 
     <label for="amount">Amount:</label>
-    <input type="number" id="amount" name="amount" v-model="amount" />
+    <input type="number" id="amount" name="amount" v-model="amount" min="0" />
 
     <label for="type">Transaction type</label>
-    <select v-model="TransactionType" id="type" name="type">
-      <option v-for="type in selectTransactionType" :key="type" :value="type">{{ type }}</option>
+    <select v-model="transactionType" id="type" name="type">
+      <option v-for="type in selectTransactionTypes" :key="type" :value="type">{{ type }}</option>
     </select>
 
     <label for="category">Transaction category</label>
-    <select v-model="Category" id="category" name="category">
+    <select v-model="category" id="category" name="category">
       <option v-for="opt in selectCategoryOptions" :key="opt" :value="opt">{{ opt }}</option>
     </select>
 
