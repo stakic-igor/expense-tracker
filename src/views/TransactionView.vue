@@ -58,7 +58,7 @@ onMounted(() => {
   }
 })
 
-const currentPage = ref(1)
+const currentPage = ref(0)
 const itemsPerPage = ref(5)
 
 const startIndex = computed(() => (currentPage.value - 1) * itemsPerPage.value)
@@ -73,16 +73,35 @@ const totalPages = computed(() => {
 })
 
 const paginationPreviousPage = () => {
-  currentPage.value--
+  if (currentPage.value > 1) {
+    currentPage.value--
+  }
 }
 
 const paginationNextPage = () => {
-  currentPage.value++
+  if (currentPage.value < totalPages.value) {
+    currentPage.value++
+  }
 }
+
+watch(totalPages, (newTotalPages) => {
+  if (transactions.value.length === 0) {
+    currentPage.value = 0
+  } else if (currentPage.value > newTotalPages) {
+    currentPage.value = newTotalPages
+  } else if (transactions.value.length > 0 && currentPage.value === 0) {
+    currentPage.value = 1
+  }
+})
+
+const pageNumbers = computed(() => {
+  return Array.from({ length: totalPages.value }, (_, i) => i + 1)
+})
 </script>
 
 <template>
   <h1>Transaction View</h1>
+  {{ pageNumbers }}
   <section class="font-light">
     Income: {{ totalIncome }}| Expense: {{ totalExpenses }} |
     <span class="font-bold">Balance: </span>{{ balance }}
@@ -90,9 +109,12 @@ const paginationNextPage = () => {
   <TransactionItem v-for="item in paginatedTransactions" :key="item.id" :item="item" />
   <TransactionForm @add-transaction="addTransaction" />
 
-  current page{{ currentPage }} total{{ totalPages }}
   <section>
-    <button @click="paginationPreviousPage" :disabled="currentPage === 1">Previous</button>
+    <button @click="paginationPreviousPage" :disabled="currentPage === 1 || totalPages === 0">
+      Previous
+    </button>
+    <div v-if="totalPages === 0">No Pages</div>
+    <div v-else>Page {{ currentPage }} of {{ totalPages }}</div>
     <button @click="paginationNextPage" :disabled="currentPage === totalPages">Next</button>
   </section>
 </template>
