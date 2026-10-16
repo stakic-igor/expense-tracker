@@ -57,6 +57,20 @@ onMounted(() => {
     transactions.value = JSON.parse(storedTransactions)
   }
 })
+
+const currentPage = ref(2)
+const itemsPerPage = ref(5)
+
+const startIndex = computed(() => (currentPage.value - 1) * itemsPerPage.value)
+const endIndex = computed(() => startIndex.value + itemsPerPage.value)
+
+const paginatedTransactions = computed(() =>
+  transactions.value.slice(startIndex.value, endIndex.value),
+)
+
+const totalPages = computed(() => {
+  return Math.ceil(transactions.value.length / itemsPerPage.value)
+})
 </script>
 
 <template>
@@ -65,6 +79,8 @@ onMounted(() => {
     Income: {{ totalIncome }}| Expense: {{ totalExpenses }} |
     <span class="font-bold">Balance: </span>{{ balance }}
   </section>
-  <TransactionItem v-for="item in transactions" :key="item.id" :item="item" />
+  <TransactionItem v-for="item in paginatedTransactions" :key="item.id" :item="item" />
   <TransactionForm @add-transaction="addTransaction" />
+
+  {{ startIndex }} {{ totalPages }}
 </template>
