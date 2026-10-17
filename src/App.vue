@@ -3,5 +3,7 @@ import TransactionView from './views/TransactionView.vue'
 </script>
 
 <template>
-  <TransactionView />
+  <main class="container mx-auto p-4">
+    <TransactionView />
+  </main>
 </template>

@@ -40,7 +40,7 @@ const handleSubmit = () => {
 <template>
   <form @submit.prevent="handleSubmit">
     <label for="description">Description:</label>
-    <input type="text" id="description" name="description" v-model="description" />
+    <input type="text" id="description" name="description" v-model="description" required />
 
     <label for="amount">Amount:</label>
     <input type="number" id="amount" name="amount" v-model="amount" min="0" />

@@ -5,6 +5,7 @@ import type { Transaction } from '@/types/transaction'
 import type { TransactionType, Category } from '@/types/transaction.ts'
 import TransactionItem from '@/components/TransactionItem.vue'
 import TransactionForm from '@/components/TransactionForm.vue'
+import TransactionStatistic from '@/components/TransactionStatistic.vue'
 
 const transactions = ref<Transaction[]>([])
 
@@ -97,24 +98,41 @@ watch(totalPages, (newTotalPages) => {
 const pageNumbers = computed(() => {
   return Array.from({ length: totalPages.value }, (_, i) => i + 1)
 })
+
+const getPage = (item: number) => {
+  currentPage.value = item
+}
 </script>
 
 <template>
-  <h1>Transaction View</h1>
-  {{ pageNumbers }}
-  <section class="font-light">
-    Income: {{ totalIncome }}| Expense: {{ totalExpenses }} |
-    <span class="font-bold">Balance: </span>{{ balance }}
+  <h1>Expense Tracker</h1>
+  <section>
+    <TransactionStatistic
+      :totalIncome="totalIncome"
+      :totalExpenses="totalExpenses"
+      :balance="balance"
+    />
   </section>
   <TransactionItem v-for="item in paginatedTransactions" :key="item.id" :item="item" />
   <TransactionForm @add-transaction="addTransaction" />
 
   <section>
-    <button @click="paginationPreviousPage" :disabled="currentPage === 1 || totalPages === 0">
-      Previous
-    </button>
+    <div class="flex items-center">
+      <button @click="paginationPreviousPage" :disabled="currentPage === 1 || totalPages === 0">
+        Previous
+      </button>
+      <button
+        v-for="item in pageNumbers"
+        :key="item"
+        @click="getPage(item)"
+        class="border py-1 px-2.5 cursor-pointer"
+        :class="currentPage === item ? 'text-blue-500 border-amber-800' : ''"
+      >
+        {{ item }}
+      </button>
+      <button @click="paginationNextPage" :disabled="currentPage === totalPages">Next</button>
+    </div>
     <div v-if="totalPages === 0">No Pages</div>
     <div v-else>Page {{ currentPage }} of {{ totalPages }}</div>
-    <button @click="paginationNextPage" :disabled="currentPage === totalPages">Next</button>
   </section>
 </template>
