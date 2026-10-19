@@ -8,11 +8,15 @@ defineProps<{
 
 <template>
   <section
-    class="rounded-xl shadow p-2 mb-2"
-    :class="item.type === 'expense' ? 'bg-red-300' : 'bg-blue-300'"
+    class="flex justify-between items-center rounded-xl shadow p-4 mb-2 bg-linear-to-l"
+    :class="item.type === 'expense' ? 'from-red-300 to-red-400' : 'from-emerald-400 to-emerald-500'"
   >
-    <p>{{ item.description }}</p>
-    <p :class="item.type === 'expense' ? 'text-red-500' : 'text-black'">{{ item.amount }}</p>
-    <p>{{ item.category }} - {{ item.type }}</p>
+    <div>
+      <p class="text-white font-bold text-lg">{{ item.description }}</p>
+      <p class="text-sm capitalize">{{ item.category }}</p>
+    </div>
+    <p class="text-white font-bold text-xl">
+      {{ item.type === 'expense' ? '-' : '+' }}${{ item.amount }}
+    </p>
   </section>
 </template>
