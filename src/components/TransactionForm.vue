@@ -39,22 +39,52 @@ const handleSubmit = () => {
 
 <template>
   <form @submit.prevent="handleSubmit">
-    <label for="description">Description:</label>
-    <input type="text" id="description" name="description" v-model="description" required />
-
-    <label for="amount">Amount:</label>
-    <input type="number" id="amount" name="amount" v-model="amount" min="0" />
-
-    <label for="type">Transaction type</label>
-    <select v-model="transactionType" id="type" name="type">
-      <option v-for="type in selectTransactionTypes" :key="type" :value="type">{{ type }}</option>
-    </select>
-
-    <label for="category">Transaction category</label>
-    <select v-model="category" id="category" name="category">
-      <option v-for="opt in selectCategoryOptions" :key="opt" :value="opt">{{ opt }}</option>
-    </select>
-
-    <button type="submit">save tranasaction</button>
+    <div class="mb-4">
+      <label for="description" class="block mb-1">Description:</label>
+      <input
+        type="text"
+        id="description"
+        name="description"
+        v-model="description"
+        required
+        class="border rounded px-2 py-1 w-full"
+      />
+    </div>
+    <div class="mb-4">
+      <label for="amount" class="block mb-1">Amount:</label>
+      <input
+        type="number"
+        id="amount"
+        name="amount"
+        v-model="amount"
+        min="0"
+        class="border rounded px-2 py-1 w-full"
+      />
+    </div>
+    <div class="mb-4">
+      <label for="type" class="block mb-1">Transaction type</label>
+      <select
+        v-model="transactionType"
+        id="type"
+        name="type"
+        class="border rounded px-2 py-1 w-full"
+      >
+        <option v-for="type in selectTransactionTypes" :key="type" :value="type">{{ type }}</option>
+      </select>
+    </div>
+    <div class="mb-4">
+      <label for="category" class="block mb-1">Transaction category</label>
+      <select
+        v-model="category"
+        id="category"
+        name="category"
+        class="border rounded px-2 py-1 w-full"
+      >
+        <option v-for="opt in selectCategoryOptions" :key="opt" :value="opt">{{ opt }}</option>
+      </select>
+    </div>
+    <button type="submit" class="bg-blue-500 text-white px-4 py-2 mt-4 rounded hover:bg-blue-600">
+      save tranasaction
+    </button>
   </form>
 </template>
