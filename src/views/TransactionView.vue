@@ -6,6 +6,7 @@ import type { TransactionType, Category } from '@/types/transaction.ts'
 import TransactionItem from '@/components/TransactionItem.vue'
 import TransactionForm from '@/components/TransactionForm.vue'
 import TransactionStatistic from '@/components/TransactionStatistic.vue'
+import TransactionEmpty from '@/components/TransactionEmpty.vue'
 
 const transactions = ref<Transaction[]>([])
 
@@ -113,7 +114,8 @@ const getPage = (item: number) => {
       :balance="balance"
     />
   </section>
-  <TransactionItem v-for="item in paginatedTransactions" :key="item.id" :item="item" />
+  <TransactionEmpty v-if="transactions.length === 0" />
+  <TransactionItem v-else v-for="item in paginatedTransactions" :key="item.id" :item="item" />
   <TransactionForm @add-transaction="addTransaction" />
 
   <section>
