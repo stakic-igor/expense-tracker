@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, watch, onMounted } from 'vue'
 import { v4 as uuidv4 } from 'uuid'
-import type { Transaction } from '@/types/transaction'
-import type { TransactionType, Category } from '@/types/transaction.ts'
+import type { Transaction, ExpenseTransaction, IncomeTransaction } from '@/types/transaction'
 import TransactionItem from '@/components/TransactionItem.vue'
 import TransactionForm from '@/components/TransactionForm.vue'
 import TransactionStatistic from '@/components/TransactionStatistic.vue'
@@ -29,19 +28,29 @@ const balance = computed(() => {
   }, 0)
 })
 
-const addTransaction = (payload: {
-  description: string
-  amount: number
-  type: TransactionType
-  category: Category
-}) => {
-  transactions.value.push({
-    id: uuidv4(),
-    description: payload.description,
-    amount: payload.amount,
-    type: payload.type,
-    category: payload.category,
-  })
+const addTransaction = (
+  payload: {
+    description: string
+    amount: number
+  } & (ExpenseTransaction | IncomeTransaction),
+) => {
+  if (payload.type === 'income') {
+    transactions.value.push({
+      id: uuidv4(),
+      description: payload.description,
+      amount: payload.amount,
+      type: payload.type,
+      category: payload.category,
+    })
+  } else {
+    transactions.value.push({
+      id: uuidv4(),
+      description: payload.description,
+      amount: payload.amount,
+      type: payload.type,
+      category: payload.category,
+    })
+  }
 }
 
 watch(
