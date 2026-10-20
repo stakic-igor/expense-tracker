@@ -32,7 +32,7 @@ A simple expense tracker built with **Vue 3** and **TypeScript**. Manage income 
 ### Installation
 
 ```sh
-git clone <your-repository-url>
+git clone https://github.com/stakic-igor/expense-tracker
 cd expense-tracker
 npm install
 npm run dev
@@ -62,6 +62,8 @@ src/
 │   ├── TransactionPagination.vue  # Page navigation
 │   ├── TransactionEmpty.vue       # Empty-state message
 │   └── icons/
+        ├── ArrowBackIcon.vue
+│       └── ArrowForwardIcon.vue
 ├── types/
 │   └── transaction.ts             # Transaction types and categories
 ├── views/
