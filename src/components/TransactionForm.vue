@@ -9,7 +9,7 @@ import type {
 } from '@/types/transaction.ts'
 
 const description = ref('')
-const amount = ref(0)
+const amount = ref(1)
 const transactionType = ref<TransactionType>('income')
 const category = ref<ExpenseCategory | IncomeCategory>('other')
 
@@ -57,6 +57,9 @@ const handleSubmit = () => {
   if (!validateDescription()) {
     return
   }
+  if (!validateAmount()) {
+    return
+  }
   if (transactionType.value === 'income') {
     if (isIncomeCategory(category.value)) {
       const payload: {
@@ -99,6 +102,7 @@ watch(transactionType, (newTransactionType) => {
 })
 
 const descriptionError = ref('')
+const amountError = ref('')
 
 const validateDescription = () => {
   if (description.value.trim() === '') {
@@ -108,6 +112,27 @@ const validateDescription = () => {
   descriptionError.value = ''
   return true
 }
+
+const validateAmount = () => {
+  if (amount.value < 1) {
+    amountError.value = 'Amount must be at least 1.'
+    return false
+  }
+  amountError.value = ''
+  return true
+}
+
+watch(description, (newDescription) => {
+  if (descriptionError.value && newDescription.trim() !== '') {
+    descriptionError.value = ''
+  }
+})
+
+watch(amount, (newAmount) => {
+  if (amountError.value && newAmount >= 1) {
+    amountError.value = ''
+  }
+})
 </script>
 
 <template>
@@ -133,9 +158,10 @@ const validateDescription = () => {
         id="amount"
         name="amount"
         v-model="amount"
-        min="0"
         class="border rounded px-2 py-1 w-full"
+        :class="amountError ? 'border-red-500' : ''"
       />
+      <span v-if="amountError" class="font-light text-red-500 text-xs"> {{ amountError }}</span>
     </div>
     <div class="mb-4">
       <label for="type" class="block mb-1">Transaction type</label>
