@@ -1,48 +1,118 @@
-# expense-tracker
+# Expense Tracker
 
-This template should help get you started developing with Vue 3 in Vite.
+A simple expense tracker built with **Vue 3** and **TypeScript**. Manage income and expenses, categorize transactions, track your balance, and keep your data in the browser.
 
-## Recommended IDE Setup
+## Features
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+- **Add transactions** — income or expense, with a description, amount, and category
+- **Separate categories** — dedicated category sets for income and expenses
+- **Financial overview** — total income, total expenses, and current balance
+- **Form validation** — a description is required before saving
+- **Pagination** — transactions split across pages
+- **Local storage** — data persists across page refreshes
+- **Reactive UI** — lists and summaries update automatically
 
-## Recommended Browser Setup
+## Tech Stack
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+| Tool                                          | Purpose                      |
+| --------------------------------------------- | ---------------------------- |
+| [Vue 3](https://vuejs.org/)                   | Component-based reactive UI  |
+| [TypeScript](https://www.typescriptlang.org/) | Static typing                |
+| [Vite](https://vite.dev/)                     | Dev server and build tooling |
+| [Tailwind CSS](https://tailwindcss.com/)      | Utility-first styling        |
+| [uuid](https://github.com/uuidjs/uuid)        | Unique transaction IDs       |
 
-## Type Support for `.vue` Imports in TS
+## Getting Started
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+### Prerequisites
 
-## Customize configuration
+- Node.js `^22.18.0` or `>=24.12.0`
+- npm
 
-See [Vite Configuration Reference](https://vite.dev/config/).
-
-## Project Setup
+### Installation
 
 ```sh
+git clone <your-repository-url>
+cd expense-tracker
 npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
 npm run dev
 ```
 
-### Type-Check, Compile and Minify for Production
+Then open the local URL printed by Vite.
 
-```sh
-npm run build
+### Scripts
+
+| Command              | Description                            |
+| -------------------- | -------------------------------------- |
+| `npm run dev`        | Start the development server           |
+| `npm run build`      | Type-check and build for production    |
+| `npm run preview`    | Preview the production build locally   |
+| `npm run type-check` | Run `vue-tsc` type checking            |
+| `npm run lint`       | Lint with oxlint and ESLint (auto-fix) |
+| `npm run format`     | Format `src/` with Prettier            |
+
+## Project Structure
+
+```text
+src/
+├── components/
+│   ├── TransactionForm.vue        # Add-transaction form with validation
+│   ├── TransactionItem.vue        # Single transaction row
+│   ├── TransactionStatistic.vue   # Income / expense / balance summary
+│   ├── TransactionPagination.vue  # Page navigation
+│   ├── TransactionEmpty.vue       # Empty-state message
+│   └── icons/
+├── types/
+│   └── transaction.ts             # Transaction types and categories
+├── views/
+│   └── TransactionView.vue        # Main view, state, and persistence
+├── App.vue
+└── main.ts
 ```
 
-### Lint with [ESLint](https://eslint.org/)
+## How It Works
 
-```sh
-npm run lint
-```
+### Transactions
+
+Each transaction has an `id`, `description`, `amount`, `type`, and `category`. Income and expense transactions use separate category types (a discriminated union), so a transaction can only have a category that matches its type.
+
+### Financial Summary
+
+- **Total Income** — sum of all income transactions
+- **Total Expenses** — sum of all expense transactions
+- **Balance** — total income minus total expenses
+
+Amounts are stored as positive numbers. Expenses are subtracted when calculating the balance.
+
+### Data Persistence
+
+Transactions are saved to `localStorage` under the `transactions` key. Data stays in the current browser and is not synced between devices.
+
+## What I Learned
+
+This project is part of my frontend practice with Vue 3 and TypeScript:
+
+- Composition API and `<script setup>`
+- Reactive state with `ref`, `computed`, and `watch`
+- Component communication via props and emitted events
+- Interfaces, type aliases, union types, and discriminated unions
+- Form handling and input validation
+- Derived state and computed summaries
+- Pagination and array methods
+- Browser storage and persistence
+- Conditional rendering and dynamic styling with Tailwind CSS
+
+## Roadmap
+
+- [ ] Unit and component tests
+- [ ] Amount validation and better accessibility
+- [ ] Edit and delete transactions
+- [ ] Filter by type and category
+- [ ] Sort by date or amount
+- [ ] Transaction dates and date-range filtering
+- [ ] Charts for income and expenses
+- [ ] Improved responsive design
+
+## License
+
+Created for learning and personal development.
