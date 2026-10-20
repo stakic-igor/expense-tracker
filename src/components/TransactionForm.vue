@@ -98,10 +98,14 @@ watch(transactionType, (newTransactionType) => {
   }
 })
 
+const descriptionError = ref('')
+
 const validateDescription = () => {
-  if (description.value === '' || description.value.trim() === '') {
+  if (description.value.trim() === '') {
+    descriptionError.value = 'Please, add description.'
     return false
   }
+  descriptionError.value = ''
   return true
 }
 </script>
@@ -116,7 +120,11 @@ const validateDescription = () => {
         name="description"
         v-model="description"
         class="border rounded px-2 py-1 w-full"
+        :class="descriptionError ? 'border-red-500' : ''"
       />
+      <span v-if="descriptionError" class="font-light text-red-500 text-xs">{{
+        descriptionError
+      }}</span>
     </div>
     <div class="mb-4">
       <label for="amount" class="block mb-1">Amount:</label>
