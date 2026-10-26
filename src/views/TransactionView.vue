@@ -113,6 +113,10 @@ const pageNumbers = computed(() => {
 const getPage = (item: number) => {
   currentPage.value = item
 }
+
+const handleDelete = (id: string) => {
+  transactions.value = transactions.value.filter((item) => item.id !== id)
+}
 </script>
 
 <template>
@@ -125,7 +129,13 @@ const getPage = (item: number) => {
     />
   </section>
   <TransactionEmpty v-if="transactions.length === 0" />
-  <TransactionItem v-else v-for="item in paginatedTransactions" :key="item.id" :item="item" />
+  <TransactionItem
+    v-else
+    v-for="item in paginatedTransactions"
+    :key="item.id"
+    :item="item"
+    @deleteItem="handleDelete(item.id)"
+  />
   <TransactionForm @add-transaction="addTransaction" />
   <TransactionPagination
     :currentPage="currentPage"
