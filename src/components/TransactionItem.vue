@@ -10,10 +10,6 @@ defineProps<{
 const emit = defineEmits<{
   deleteItem: [id: string]
 }>()
-
-const deleteItem = (id: string) => {
-  console.log('delete item', id)
-}
 </script>
 
 <template>

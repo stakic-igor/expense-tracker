@@ -108,7 +108,7 @@ This project is part of my frontend practice with Vue 3 and TypeScript:
 
 - [ ] Unit and component tests
 - [ ] Amount validation and better accessibility
-- [ ] Edit and delete transactions
+- [ ] Edit transactions
 - [ ] Filter by type and category
 - [ ] Sort by date or amount
 - [ ] Transaction dates and date-range filtering
