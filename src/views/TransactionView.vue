@@ -2,7 +2,7 @@
 import { ref, computed, watch, onMounted } from 'vue'
 import { v4 as uuidv4 } from 'uuid'
 import type { Transaction, ExpenseTransaction, IncomeTransaction } from '@/types/transaction'
-import { balance } from '@/utils/transactionsUtils'
+import { calculateBalance } from '@/utils/transactionsUtils'
 import TransactionItem from '@/components/TransactionItem.vue'
 import TransactionForm from '@/components/TransactionForm.vue'
 import TransactionStatistic from '@/components/TransactionStatistic.vue'
@@ -113,7 +113,7 @@ const handleDelete = (id: string) => {
   transactions.value = transactions.value.filter((item) => item.id !== id)
 }
 
-const balanceValue = computed(() => balance(transactions.value))
+const balanceValue = computed(() => calculateBalance(transactions.value))
 </script>
 
 <template>
